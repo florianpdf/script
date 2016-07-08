@@ -14,7 +14,7 @@ Tu as la possibilité de refuser l'installation d'un outil"
 5. Installation de LAMP (Apache, MySql, PHP)"
 6. Installation de phpMyAdmin"
 
-Comment ça marche ??
-git clone https://github.com/florianpdf/script.git
+Comment ça marche ??  
+git clone https://github.com/florianpdf/script.git  
 cd script
-sh install_linux.sh
+sh install_linux.sh  
