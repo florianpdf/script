@@ -16,5 +16,5 @@ Tu as la possibilité de refuser l'installation d'un outil"
 
 Comment ça marche ??  
 git clone https://github.com/florianpdf/script.git  
-cd script
+cd script  
 sh install_linux.sh  
