@@ -48,27 +48,36 @@ case $response in
 		    [yY][eE][sS]|[yY]) 
 		        sudo apt-get install git
 		        echo "\n"
-		        echo "\033[32;1;1;1;3m Now that you have git installed, you need to do a few things so that the commit messages that will be generated for you will contain your correct information.\n"
-		        echo "Appuie sur Entrée pour continuer... \n"
+				echo "\033[32;1;1;1;3m Now that you have git installed, you need to do a few things so that the commit messages that will be generated for you will contain your correct information."
+				echo "Appuie sur Entrée pour continuer... \n"
 				read a
-				echo "\033[0;36mSaisi ton nom\033[0m"
-				read nom
-				echo "\033[0;36mSaisi ton prénom\033[0m"
-				read prenom
-				echo "\033[0;36mSaisi l'adresse mail que tu as utilisé lors de ton inscription à github\033[0m"
-				read github
-				git config --global user.name "$nom $prenom"
-				git config --global user.email "$github"
-				echo "\n"
-				echo "\033[32;1;1;1;3m Git est maintenant installé et configurer."
-				echo "\n"
-		        echo "Appuie sur Entrée pour continuer... \n"
-				read a
-		        ;;
-		    *)
-		        echo 'Au suivant... \n'
-		        ;;
-		esac
+				config_git
+				config_git (){
+					echo "\033[0;36mSaisi ton nom\033[0m"
+					read nom
+					echo "\033[0;36mSaisi ton prenom\033[0m"
+					read prenom
+					echo "\033[0;36mSaisi l'adresse mail que tu as utilisé lors de ton inscription à github\033[0m"
+					read github
+					echo "\n"
+					echo "\033[31;1;4;5;7mLes informations saisis sont:\033[0m"
+					echo "\033[31;1;4;5;7mNom et prénom:\033[0m $nom $prenom"
+					echo "\033[31;1;4;5;7mE-mail:\033[0m $github \n"
+					read -r -p "Ces infos sont-elles correct ? [N/y] " response
+					case $response in
+					    [yY][eE][sS]|[yY])
+							git config --global user.name "$nom $prenom"
+							git config --global user.email "$github"
+							;;
+						*)
+							echo "\n"
+							echo "On recommence \n"
+							config_git
+							;;
+				esac
+
+				}
+				config_git
 
 		echo "\033[31;1;4;5;7m Création d'un gitignore global pour Symfony2 \033[0m\n"
 		echo "\033[32;1;1;1;3m Detail du gitignore_global créer ici: https://github.com/github/gitignore/blob/master/Symfony.gitignore \033[0m\n"
