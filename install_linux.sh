@@ -9,7 +9,7 @@ echo "\033[0;31m 4. Création d'un gitignore global pour Symfony2"
 echo "\033[0;31m 5. Installation de LAMP (Apache, MySql, PHP)"
 echo "\033[0;31m 6. Installation de phpMyAdmin \n"
 
-read -r -p "On coninue ? [N/y] " response
+read -r -p "On continue ? [N/y] " response
 case $response in
     [yY][eE][sS]|[yY]) 
 		echo "\033[31;1;4;5;7m Update apt-get \033[0m\n"
@@ -53,11 +53,11 @@ case $response in
 				echo "\033[0;36m Saisi ton nom"
 				read nom
 				echo "\033[0;36m Saisi ton prénom"
-				read prénom
+				read prenom
 				echo "\033[0;36m Saisi l'adresse mail que tu as utilisé lors de ton inscription à github"
 				read github
-				git config --global user.name "Your Name"
-				git config --global user.email "youremail@domain.com"
+				git config --global user.name "$nom $prenom"
+				git config --global user.email "$github"
 				echo "\n"
 				echo "\033[32;1;1;1;3m Git est maintenant installé et configurer."
 				echo "\n"
