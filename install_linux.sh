@@ -13,7 +13,7 @@ read -r -p "On continue ? [N/y] " response
 case $response in
     [yY][eE][sS]|[yY]) 
 		echo "\033[31;1;4;5;7mUpdate apt-get \033[0m\n"
-		read -r -p "On coninue ? [N/y] " response
+		read -r -p "On coninue ? [N/y] \n" response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
 		        sudo apt-get update
@@ -28,7 +28,7 @@ case $response in
 		esac
 
 		echo "\033[31;1;4;5;7m Upgrade apt-get \033[0m\n"
-		read -r -p "On coninue ? [N/y] " response
+		read -r -p "On coninue ? [N/y] \n" response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
 		        sudo apt-get upgrade
@@ -43,7 +43,7 @@ case $response in
 		esac
 
 		echo "\033[31;1;4;5;7m Installation de git \033[0m\n"
-		read -r -p "On coninue ? [N/y] " response
+		read -r -p "On coninue ? [N/y] \n" response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
 		        sudo apt-get install git
@@ -88,11 +88,10 @@ case $response in
 		esac
 
 		echo "\033[31;1;4;5;7m Création d'un gitignore global pour Symfony2 \033[0m\n"
-		echo "\033[32;1;1;1;3m Detail du gitignore_global créer ici: https://github.com/github/gitignore/blob/master/Symfony.gitignore \033[0m\n"
-		read -r -p "On coninue ? [N/y] " response
+		echo "\033[32;1;1;1;3m Source: https://github.com/github/gitignore/blob/master/ \033[0m\n"
+		read -r -p "Souhaite tu consulter le detail du gitignore_global ? [N/y] \n" response
 		case $response in
-		    [yY][eE][sS]|[yY]) 
-		        git config --global core.excludesfile ~/.gitignore_global
+		    [yY][eE][sS]|[yY])		
 				echo "
 				# Cache and logs (Symfony2)
 				/app/cache/*
@@ -144,12 +143,74 @@ case $response in
 				*/Entity/*~
 
 				# PhpStorm config
-				.idea
-				/.idea
-				" > SAISIR LIEN VERS HOME EX: /Users/Florian/.gitignore_global
-		        echo "Appuie sur Entrée pour continuer... \n"
-				read a
-		        ;;
+				.idea \n"
+
+			*)
+				read -r -p "Cela te convient ? [N/y] \n" response
+				case $response in
+				    [yY][eE][sS]|[yY])
+				        git config --global core.excludesfile ~/.gitignore_global
+						echo "
+						# Cache and logs (Symfony2)
+						/app/cache/*
+						/app/logs/*
+						!app/cache/.gitkeep
+						!app/logs/.gitkeep
+
+						# Email spool folder
+						/app/spool/*
+
+						# Cache, session files and logs (Symfony3)
+						/var/cache/*
+						/var/logs/*
+						/var/sessions/*
+						!var/cache/.gitkeep
+						!var/logs/.gitkeep
+						!var/sessions/.gitkeep
+
+						# Parameters
+						/app/config/parameters.yml
+						/app/config/parameters.ini
+
+						# Managed by Composer
+						/app/bootstrap.php.cache
+						/var/bootstrap.php.cache
+						/bin/*
+						!bin/console
+						!bin/symfony_requirements
+						/vendor/
+
+						# Assets and user uploads
+						/web/bundles/
+						/web/uploads/
+
+						# Assets managed by Bower
+						/web/assets/vendor/
+
+						# PHPUnit
+						/app/phpunit.xml
+						/phpunit.xml
+
+						# Build data
+						/build/
+
+						# Composer PHAR
+						/composer.phar
+
+						# Backup entities generated with doctrine:generate:entities command
+						*/Entity/*~
+
+						# PhpStorm config
+						.idea
+						" > ~/.gitignore_global
+						echo "\n"
+						echo "Le fichier à été créé dans ton home, tu peux le modifier à tout momnt \n"
+				        echo "Appuie sur Entrée pour continuer... \n"
+						read a
+				        ;;
+				    *)
+						echo "No problème, on continue"
+				esac
 		    *)
 		        echo 'Au suivant... \n'
 		        ;;
