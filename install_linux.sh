@@ -51,7 +51,7 @@ case $response in
 				echo "\033[32;1;1;1;3m Now that you have git installed, you need to do a few things so that the commit messages that will be generated for you will contain your correct information."
 				echo "Appuie sur Entrée pour continuer... \n"
 				read a
-				config_git
+				
 				config_git (){
 					echo "\033[0;36mSaisi ton nom\033[0m"
 					read nom
@@ -74,10 +74,13 @@ case $response in
 							echo "On recommence \n"
 							config_git
 							;;
-				esac
-
+					esac
 				}
 				config_git
+			*)
+				echo 'Au suivant... \n'
+	        	;;
+		esac
 
 		echo "\033[31;1;4;5;7m Création d'un gitignore global pour Symfony2 \033[0m\n"
 		echo "\033[32;1;1;1;3m Detail du gitignore_global créer ici: https://github.com/github/gitignore/blob/master/Symfony.gitignore \033[0m\n"
