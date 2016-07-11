@@ -9,6 +9,68 @@ echo "\033[0;31m 4. Création d'un gitignore global pour Symfony2"
 echo "\033[0;31m 5. Installation de LAMP (Apache, MySql, PHP)"
 echo "\033[0;31m 6. Installation de phpMyAdmin \n"
 
+###################################
+#### Définition des fonctions #####
+###################################
+
+show_gitignore (){
+echo "# Cache and logs (Symfony2)
+/app/cache/*
+/app/logs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+
+# Email spool folder
+/app/spool/*
+
+# Cache, session files and logs (Symfony3)
+/var/cache/*
+/var/logs/*
+/var/sessions/*
+!var/cache/.gitkeep
+!var/logs/.gitkeep
+!var/sessions/.gitkeep
+
+# Parameters
+/app/config/parameters.yml
+/app/config/parameters.ini
+
+# Managed by Composer
+/app/bootstrap.php.cache
+/var/bootstrap.php.cache
+/bin/*
+!bin/console
+!bin/symfony_requirements
+/vendor/
+
+# Assets and user uploads
+/web/bundles/
+/web/uploads/
+
+# Assets managed by Bower
+/web/assets/vendor/
+
+# PHPUnit
+/app/phpunit.xml
+/phpunit.xml
+
+# Build data
+/build/
+
+# Composer PHAR
+/composer.phar
+
+# Backup entities generated with doctrine:generate:entities command
+*/Entity/*~
+
+# PhpStorm config
+.idea"
+}
+
+###################################
+# Fin de Définition des fonctions #
+###################################
+
 read -r -p "On continue ? [N/y] " response
 case $response in
     [yY][eE][sS]|[yY]) 
@@ -89,131 +151,45 @@ case $response in
 
 		echo "\033[31;1;4;5;7m Création d'un gitignore global pour Symfony2 \033[0m\n"
 		echo "\033[32;1;1;1;3m Source: https://github.com/github/gitignore/blob/master/ \033[0m\n"
-		read -r -p "Souhaite tu consulter le detail du gitignore_global ? [N/y] \n" response
+		read -r -p "Souhaite tu créer un gitignore_global ? [N/y]" response
 		case $response in
-		    [yY][eE][sS]|[yY])		
-				echo "
-				# Cache and logs (Symfony2)
-				/app/cache/*
-				/app/logs/*
-				!app/cache/.gitkeep
-				!app/logs/.gitkeep
-
-				# Email spool folder
-				/app/spool/*
-
-				# Cache, session files and logs (Symfony3)
-				/var/cache/*
-				/var/logs/*
-				/var/sessions/*
-				!var/cache/.gitkeep
-				!var/logs/.gitkeep
-				!var/sessions/.gitkeep
-
-				# Parameters
-				/app/config/parameters.yml
-				/app/config/parameters.ini
-
-				# Managed by Composer
-				/app/bootstrap.php.cache
-				/var/bootstrap.php.cache
-				/bin/*
-				!bin/console
-				!bin/symfony_requirements
-				/vendor/
-
-				# Assets and user uploads
-				/web/bundles/
-				/web/uploads/
-
-				# Assets managed by Bower
-				/web/assets/vendor/
-
-				# PHPUnit
-				/app/phpunit.xml
-				/phpunit.xml
-
-				# Build data
-				/build/
-
-				# Composer PHAR
-				/composer.phar
-
-				# Backup entities generated with doctrine:generate:entities command
-				*/Entity/*~
-
-				# PhpStorm config
-				.idea \n"
-
-			*)
-				read -r -p "Cela te convient ? [N/y] \n" response
+		    [yY][eE][sS]|[yY])
+		    	echo "\n"	
+				read -r -p "Souhaite tu consulter au préalable le detail du gitignore_global avant de le créer ? [N/y]" response
 				case $response in
 				    [yY][eE][sS]|[yY])
-				        git config --global core.excludesfile ~/.gitignore_global
-						echo "
-						# Cache and logs (Symfony2)
-						/app/cache/*
-						/app/logs/*
-						!app/cache/.gitkeep
-						!app/logs/.gitkeep
-
-						# Email spool folder
-						/app/spool/*
-
-						# Cache, session files and logs (Symfony3)
-						/var/cache/*
-						/var/logs/*
-						/var/sessions/*
-						!var/cache/.gitkeep
-						!var/logs/.gitkeep
-						!var/sessions/.gitkeep
-
-						# Parameters
-						/app/config/parameters.yml
-						/app/config/parameters.ini
-
-						# Managed by Composer
-						/app/bootstrap.php.cache
-						/var/bootstrap.php.cache
-						/bin/*
-						!bin/console
-						!bin/symfony_requirements
-						/vendor/
-
-						# Assets and user uploads
-						/web/bundles/
-						/web/uploads/
-
-						# Assets managed by Bower
-						/web/assets/vendor/
-
-						# PHPUnit
-						/app/phpunit.xml
-						/phpunit.xml
-
-						# Build data
-						/build/
-
-						# Composer PHAR
-						/composer.phar
-
-						# Backup entities generated with doctrine:generate:entities command
-						*/Entity/*~
-
-						# PhpStorm config
-						.idea
-						" > ~/.gitignore_global
 						echo "\n"
-						echo "Le fichier à été créé dans ton home, tu peux le modifier à tout momnt \n"
+						show_gitignore
+						echo "\n"
+						read -r -p "Cela te convient ? [N/y]" response
+						case $response in
+						    [yY][eE][sS]|[yY])
+								git config --global core.excludesfile ~/.gitignore_global
+								show_gitignore > ~/.gitignore_global
+								echo "\n"
+								echo "Le fichier à été créé dans ton home, tu peux le modifier à tout moment \n"
+						        echo "Appuie sur Entrée pour continuer... \n"
+								;;
+							*)
+								echo "\n"
+								echo "No problème, on continue"
+								;;
+						esac
+						;;
+					*)
+						echo "\n"
+						git config --global core.excludesfile ~/.gitignore_global
+						show_gitignore > ~/.gitignore_global
+						echo "Le fichier à été créé dans ton home, tu peux le modifier à tout moment \n"
 				        echo "Appuie sur Entrée pour continuer... \n"
-						read a
-				        ;;
-				    *)
-						echo "No problème, on continue"
+						;;
 				esac
-		    *)
-		        echo 'Au suivant... \n'
-		        ;;
+				;;
+
+			*)
+				echo "\n"
+				echo "No problème on continu l'install"
+				;;
 		esac
 
 		echo "\033[31;1;4;5;7m Installation de Sublime Text V2 ou V3 \033[0m\n"
