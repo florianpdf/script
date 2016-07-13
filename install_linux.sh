@@ -1,4 +1,5 @@
-echo "\033[0;31m Bienvenue \n"
+
+echo "\033[0;31m Bonjour $USER\n"
 echo "\033[0;31m Ce script va te permettre d'installer les principaux outils sur une distribution Linux Ubuntu 16.04"
 echo "\033[0;31m Les outils suivant seront instalés (dans l'ordre)"
 echo "\033[0;31m Tu as la possibilité de refuser l'installation d'un outil"
@@ -67,6 +68,31 @@ echo "# Cache and logs (Symfony2)
 .idea"
 }
 
+config_git (){
+	echo "\033[0;36mSaisi ton nom\033[0m"
+	read nom
+	echo "\033[0;36mSaisi ton prenom\033[0m"
+	read prenom
+	echo "\033[0;36mSaisi l'adresse mail que tu as utilisé lors de ton inscription à github\033[0m"
+	read github
+	echo "\n"
+	echo "\033[31;1;4;5;7mLes informations saisis sont:\033[0m"
+	echo "\033[31;1;4;5;7mNom et prénom:\033[0m $nom $prenom"
+	echo "\033[31;1;4;5;7mE-mail:\033[0m $github \n"
+	read -r -p "Ces infos sont-elles correct ? [N/y] " response
+	case $response in
+	    [yY][eE][sS]|[yY])
+			git config --global user.name "$nom $prenom"
+			git config --global user.email "$github"
+			;;
+		*)
+			echo "\n"
+			echo "On recommence \n"
+			config_git
+			;;
+		esac
+}
+
 ###################################
 # Fin de Définition des fonctions #
 ###################################
@@ -113,30 +139,6 @@ case $response in
 		        echo "\033[32;1;1;1;3m Now that you have git installed, you need to do a few things so that the commit messages that will be generated for you will contain your correct information.\n"
 		        echo "Appuie sur Entrée pour continuer... \n"
 				read a
-				config_git (){
-					echo "\033[0;36mSaisi ton nom\033[0m"
-					read nom
-					echo "\033[0;36mSaisi ton prenom\033[0m"
-					read prenom
-					echo "\033[0;36mSaisi l'adresse mail que tu as utilisé lors de ton inscription à github\033[0m"
-					read github
-					echo "\n"
-					echo "\033[31;1;4;5;7mLes informations saisis sont:\033[0m"
-					echo "\033[31;1;4;5;7mNom et prénom:\033[0m $nom $prenom"
-					echo "\033[31;1;4;5;7mE-mail:\033[0m $github \n"
-					read -r -p "Ces infos sont-elles correct ? [N/y] " response
-					case $response in
-					    [yY][eE][sS]|[yY])
-							git config --global user.name "$nom $prenom"
-							git config --global user.email "$github"
-							;;
-						*)
-							echo "\n"
-							echo "On recommence \n"
-							config_git
-							;;
-						esac
-				}
 				config_git
 				echo "\n"
 				echo "\033[32;1;1;1;3m Git est maintenant installé et configuré."
@@ -167,7 +169,7 @@ case $response in
 								git config --global core.excludesfile ~/.gitignore_global
 								show_gitignore > ~/.gitignore_global
 								echo "\n"
-								echo "Le fichier à été créé dans ton home, tu peux le modifier à tout moment \n"
+								echo "Le fichier à été créé dans ton home ($HOST), tu peux le modifier à tout moment \n"
 						        echo "Appuie sur Entrée pour continuer... \n"
 								;;
 							*)
@@ -180,7 +182,7 @@ case $response in
 						echo "\n"
 						git config --global core.excludesfile ~/.gitignore_global
 						show_gitignore > ~/.gitignore_global
-						echo "Le fichier à été créé dans ton home, tu peux le modifier à tout moment \n"
+						echo "Le fichier à été créé dans ton home (, tu peux le modifier à tout moment \n"
 				        echo "Appuie sur Entrée pour continuer... \n"
 						;;
 				esac
