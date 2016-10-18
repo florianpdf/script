@@ -1,30 +1,32 @@
 git status
-read -r -p "Fichiers ok ??? [N/y]" response
+read -r -p "Fichiers ok ??? [n/Y]" response
 case $response in
-    [yY][eE][sS]|[yY]) 
+    [nN][oO]|[nN]) 
+        echo 'Vérifie \n'
+        ;;
+    *)
         git add .
         git commit
 
-        read -r -p "On push ??? [N/y]" response
+        read -r -p "On push ??? [n/Y]" response
         case $response in
-            [yY][eE][sS]|[yY]) 
-                branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-                read -r -p "Branch "$branch" [N/y]" response
-                case $response in
-                    [yY][eE][sS]|[yY]) 
-                        git push origin "$branch"
-                        ;;
-                    *)
-                        echo 'Vérifie ta branche \n'
-                        ;;
-                esac
-                ;;
-            *)
+            [nN][oO]|[nN]) 
                 echo 'Ok push toi même \n'
                 ;;
+            *)
+                branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+                read -r -p "Branch "$branch" [n/Y]" response
+                case $response in
+                    [nN][oO]|[nN]) 
+                        echo 'Vérifie ta branche \n'
+                        ;;
+                    *)
+                        git push origin "$branch"
+                        ;;
+
+                esac
+                ;;
+               
         esac
-        ;;
-    *)
-        echo 'Vérifie \n'
         ;;
 esac
