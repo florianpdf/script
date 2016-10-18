@@ -1,10 +1,9 @@
 git status
 echo '\n'
-read -r -p "Fichiers ok ??? 
-[n/Y] " response
+read -r -p "Fichiers ok ???   [n/Y] " response
+echo '\n'
 case $response in
-    [nN][oO]|[nN]) 
-        echo '\n'
+    [nN][oO]|[nN])
         echo 'Vérifie'
         ;;
     *)
