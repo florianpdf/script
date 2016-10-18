@@ -18,8 +18,7 @@ case $response in
                 ;;
             *)
                 branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-                read -r -p "Branch "$branch" 
-                [n/Y]  " response
+                read -r -p "Branch "$branch"    [n/Y]  " response
                 case $response in
                     [nN][oO]|[nN]) 
                         echo 'Vérifie ta branche'
