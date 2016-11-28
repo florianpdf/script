@@ -9,6 +9,7 @@ echo "\033[0;31m 3. Installation et configuration de git"
 echo "\033[0;31m 4. Création d'un gitignore global pour Symfony2"
 echo "\033[0;31m 5. Installation de LAMP (Apache, MySql, PHP)"
 echo "\033[0;31m 6. Installation de phpMyAdmin \n"
+echo "\033[0;31m 6. Installation de ohMyZsh \n"
 
 ###################################
 #### Définition des fonctions #####
@@ -101,7 +102,7 @@ read -r -p "On continue ? [N/y] " response
 case $response in
     [yY][eE][sS]|[yY]) 
 		echo "\033[31;1;4;5;7mUpdate apt-get \033[0m\n"
-		read -r -p "On coninue ? [N/y] \n" response
+		read -r -p "On coninue ? [N/y]" response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
 		        sudo apt-get update
@@ -116,7 +117,7 @@ case $response in
 		esac
 
 		echo "\033[31;1;4;5;7m Upgrade apt-get \033[0m\n"
-		read -r -p "On coninue ? [N/y] \n" response
+		read -r -p "On continue ? [N/y]" response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
 		        sudo apt-get upgrade
@@ -131,7 +132,7 @@ case $response in
 		esac
 
 		echo "\033[31;1;4;5;7m Installation de git \033[0m\n"
-		read -r -p "On coninue ? [N/y] \n" response
+		read -r -p "On coninue ? [N/y]" response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
 		        sudo apt-get install git
@@ -276,7 +277,7 @@ case $response in
 		read -r -p "On coninue ? [N/y] " response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
-		        sudo apt-get install phpmyadmin php-mbstring php-gettext
+		        sudo apt-get install php-mbstring php7.0-mbstring php-gettext libapache2-mod-php7.0
 		        echo "Appuie sur Entrée pour continuer... \n"
 				read a
 				echo "\033[31;1;1;1;3m The installation process actually adds the phpMyAdmin Apache configuration file into the \033[0;3m /etc/apache2/conf-enabled/ \033[31;1;1;1;3m directory, where it is automatically read. \n"
@@ -287,6 +288,7 @@ case $response in
 		    			[yY][eE][sS]|[yY])
 							sudo phpenmod mcrypt
 							sudo phpenmod mbstring
+							sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 							echo "\033[31;1;4;5;7m Restart du serveur Apache"
 							echo "Appuie sur Entrée pour continuer... \n"
 							read a
@@ -297,6 +299,7 @@ case $response in
 							read a
 							;;
 						*)
+							sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 							echo "\033[31;1;4;5;7m Restart du serveur Apache"
 							echo "Appuie sur Entrée pour continuer... \n"
 							read a
@@ -312,7 +315,37 @@ case $response in
 		        echo 'Au suivant... \n'
 		        ;;
 		esac
-		;;
+
+		echo "\033[31;1;4;5;7m Install ohMyZsh \033[0m\n"
+		read -r -p "On coninue ? [N/y] " response
+		case $response in
+		    [yY][eE][sS]|[yY]) 
+		        sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+		        echo "OhMyZsh a bien été installé"
+		        echo "Appuie sur Entrée pour continuer... \n"
+				read a
+		        ;;
+		    *)
+		        echo 'Au suivant... \n'
+		        ;;
+		esac
+
+		echo "\033[31;1;4;5;7m Install phpunit \033[0m\n"
+		read -r -p "On coninue ? [N/y] " response
+		case $response in
+		    [yY][eE][sS]|[yY]) 
+		        wget https://phar.phpunit.de/phpunit.phar
+				chmod +x phpunit.phar
+				sudo mv phpunit.phar /usr/local/bin/phpunit
+				echo "PhpUnit a bien été installé. Version de phpunit"
+				phpunit --version
+		        echo "Appuie sur Entrée pour continuer... \n"
+				read a
+		        ;;
+		    *)
+		        echo 'Au suivant... \n'
+		        ;;
+		esac
     *)
         echo 'A bientot... \n'
         ;;
