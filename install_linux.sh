@@ -316,10 +316,11 @@ case $response in
 		        ;;
 		esac
 
-		echo "\033[31;1;4;5;7m Install ohMyZsh \033[0m\n"
+		echo "\033[31;1;4;5;7m Install zsh et ohMyZsh \033[0m\n"
 		read -r -p "On coninue ? [N/y] " response
 		case $response in
-		    [yY][eE][sS]|[yY]) 
+		    [yY][eE][sS]|[yY])
+				sudo apt-get install zsh
 		        sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 		        echo "OhMyZsh a bien été installé"
 		        echo "Appuie sur Entrée pour continuer... \n"
@@ -346,7 +347,7 @@ case $response in
 		        echo 'Au suivant... \n'
 		        ;;
 		esac
-		
+
         echo 'A bientot... \n'
         ;;
 esac
