@@ -346,7 +346,7 @@ case $response in
 		        echo 'Au suivant... \n'
 		        ;;
 		esac
-    *)
+		
         echo 'A bientot... \n'
         ;;
 esac
