@@ -323,7 +323,6 @@ case $response in
 		    [yY][eE][sS]|[yY])
 				sudo apt-get install zsh
 		        sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-		        chsh -s $(which zsh)
 		        echo "OhMyZsh a bien été installé"
 		        echo "Appuie sur Entrée pour continuer... \n"
 				read a
@@ -359,6 +358,20 @@ case $response in
 				var=$(echo $icon | sed -r "s/]/, $to_append]/")
 				gsettings set com.canonical.Unity.Launcher favorites "$var"
 				echo "Icon ajoutés"
+		        echo "Appuie sur Entrée pour terminer l'installation... \n"
+				read a
+		        ;;
+		    *)
+		        echo 'Au suivant... \n'
+		        ;;
+		esac		
+
+		echo "\033[31;1;4;5;7m Définir OhMyZsh comme shell par défault \033[0m\n"
+		read -r -p "On coninue ? [N/y] " response
+		case $response in
+		    [yY][eE][sS]|[yY]) 
+				chsh -s $(which zsh)
+				echo "OhMyZsh a été défini par default"
 		        echo "Appuie sur Entrée pour terminer l'installation... \n"
 				read a
 		        ;;
