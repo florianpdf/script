@@ -1,3 +1,4 @@
+#!/bin/bash
 
 echo "\033[0;31m Bonjour $USER\n"
 echo "\033[0;31m Ce script va te permettre d'installer les principaux outils sur une distribution Linux Ubuntu 16.04"
@@ -322,6 +323,7 @@ case $response in
 		    [yY][eE][sS]|[yY])
 				sudo apt-get install zsh
 		        sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+		        chsh -s $(which zsh)
 		        echo "OhMyZsh a bien été installé"
 		        echo "Appuie sur Entrée pour continuer... \n"
 				read a
