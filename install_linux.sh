@@ -350,6 +350,23 @@ case $response in
 		        ;;
 		esac
 
+		echo "\033[31;1;4;5;7m Ajouter icon sublime text et terminal au lanceur \033[0m\n"
+		read -r -p "On coninue ? [N/y] " response
+		case $response in
+		    [yY][eE][sS]|[yY]) 
+				icon=$(gsettings get com.canonical.Unity.Launcher favorites)
+				to_append="'application\:\/\/gnome-terminal.desktop', 'application\:\/\/sublime-text.desktop'"
+				var=$(echo $icon | sed -r "s/]/, $to_append]/")
+				gsettings set com.canonical.Unity.Launcher favorites "$var"
+				echo "Icon ajoutés"
+		        echo "Appuie sur Entrée pour terminer l'installation... \n"
+				read a
+		        ;;
+		    *)
+		        echo 'Au suivant... \n'
+		        ;;
+		esac
+
         echo 'A bientot... \n'
         ;;
 esac
